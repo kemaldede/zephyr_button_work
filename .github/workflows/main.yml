@@ -1,0 +1,9 @@
+- name: Zephyr West
+  # You may pin to the exact commit or the version.
+  # uses: zmkfirmware/zephyr-west-action@c118b36db5d41c62f6890334ba053574c94bfe03
+  uses: zmkfirmware/zephyr-west-action@v0.3.3
+  with:
+    # Which west command to execute
+    command: # default is build
+    # Extra arguments for the west command
+    command-args: # optional
