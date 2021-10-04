@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "button_work",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"kconfig.zephyr.west": "f:\\nrf-sdk\\ncs\\v1.7.0\\toolchain\\opt\\bin\\Scripts\\west.exe",
+		"kconfig.zephyr.base": "f:\\nrf-sdk\\ncs\\v1.7.0\\zephyr",
+		"nrf-connect.applications": [
+			"f:\\nrf-sdk\\projeler\\button_work"
+		],
+		"kconfig.zephyr.board": {
+			"board": "nrf52dk_nrf52832",
+			"arch": "arm",
+			"dir": "f:\\nrf-sdk\\ncs\\v1.7.0\\zephyr\\boards\\arm\\nrf52dk_nrf52832"
+		}
+	}
+}
