@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Test
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache west modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-zephyr-modules
+        with:
+          path: |
+            modules/
+            tools/
+            zephyr/
+            bootloader/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('app/west.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: West Init
+        uses: zmkfirmware/zephyr-west-action@v0.3.3
+        id: west-init
+        with:
+          command: 'init'
+          command-args: '-l app'
+      - name: West Update
+        uses: zmkfirmware/zephyr-west-action@v0.3.3
+        id: west-update
+        with:
+          command: 'update'
+      - name: West Config Zephyr Base
+        uses: zmkfirmware/zephyr-west-action@v0.3.3
+        id: west-config
+        with:
+          command: 'config'
+          command-args: '--global zephyr.base-prefer configfile'
+      - name: West Zephyr Export
+        uses: zmkfirmware/zephyr-west-action@v0.3.3
+        id: west-zephyr-export
+        with:
+          command: 'zephyr-export'
+      - name: West Build
+        uses: zmkfirmware/zephyr-west-action@v0.3.3
+        id: west-build
+        with:
+          command: 'build'
+          command-args: '-s app'
